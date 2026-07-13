@@ -1,0 +1,9 @@
+{
+  "name": "another-reason-to-make-aliyah",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A daily, AI-rated, satirical newspaper where every headline is another reason to check flight prices to Israel.",
+  "engines": {
+    "node": ">=18"
+  }
+}

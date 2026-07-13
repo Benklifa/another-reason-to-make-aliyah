@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Another Reason To Make Aliyah</title>
+<meta name="description" content="A daily survey of world events, each one another reason to check flight prices.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f7fb;
+    --paper-card:#ffffff;
+    --ink:#0f2557;
+    --ink-soft:#4a5d85;
+    --rule:#8fa3c8;
+    --stay:#8a94a6;
+    --mid:#4a76c9;
+    --go:#0038b8;
+    --accent:#0038b8;
+    --gold:#b8923f;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+
+  body{
+    background-color:var(--paper);
+    background-image:
+      radial-gradient(ellipse at top, rgba(0,56,184,0.06), transparent 55%),
+      repeating-linear-gradient(0deg, rgba(15,37,87,0.02) 0px, rgba(15,37,87,0.02) 1px, transparent 1px, transparent 3px);
+    color:var(--ink);
+    font-family:'Lora', Georgia, serif;
+    line-height:1.55;
+    padding-bottom:70px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{ max-width:880px; margin:0 auto; padding:28px 20px 0; }
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead{ text-align:center; padding-top:10px; }
+  .masthead .stars{
+    display:flex; align-items:center; justify-content:center; gap:18px;
+    color:var(--accent); font-size:1.6rem; letter-spacing:0.4em;
+    margin-bottom:6px;
+  }
+  .masthead h1{
+    font-family:'Frank Ruhl Libre', serif;
+    font-weight:900;
+    font-size:clamp(2.2rem, 7.5vw, 4.2rem);
+    margin:0;
+    letter-spacing:0.02em;
+    line-height:1.05;
+    color:var(--ink);
+    text-shadow: 1px 1px 0 rgba(0,56,184,0.08);
+  }
+  .masthead .subhead{
+    font-family:'Lora', serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:0.95rem;
+    margin:8px 0 14px;
+  }
+  .rule{
+    border:none; border-top:3px double var(--rule); margin:0;
+  }
+  .rule.thin{ border-top:1px solid var(--rule); }
+  .dateline{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'Special Elite', monospace;
+    font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink-soft);
+    padding:8px 2px;
+  }
+
+  /* ---------- ACTION BAR ---------- */
+  .action-bar{ text-align:center; padding:26px 0 6px; }
+  .press-btn{
+    font-family:'Frank Ruhl Libre', serif;
+    font-weight:700;
+    font-size:1.05rem;
+    letter-spacing:0.04em;
+    background:var(--accent);
+    color:#fff;
+    border:2px solid var(--accent);
+    padding:14px 30px;
+    cursor:pointer;
+    border-radius:2px;
+    transition:transform 0.12s ease, background 0.2s ease;
+    box-shadow:3px 3px 0 rgba(15,37,87,0.25);
+  }
+  .press-btn:hover{ background:#002a8c; }
+  .press-btn:active{ transform:translate(2px,2px); box-shadow:1px 1px 0 rgba(15,37,87,0.25); }
+  .press-btn:disabled{ opacity:0.6; cursor:wait; }
+  .meta-line{
+    font-family:'Special Elite', monospace;
+    font-size:0.7rem; color:var(--ink-soft);
+    margin-top:10px; letter-spacing:0.05em;
+  }
+  .error-line{
+    font-family:'Special Elite', monospace;
+    font-size:0.78rem; color:#a23e2c;
+    margin-top:10px; max-width:560px; margin-left:auto; margin-right:auto;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  .section-label{
+    font-family:'Frank Ruhl Libre', serif;
+    font-weight:700;
+    font-size:0.78rem;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    text-align:center;
+    color:var(--ink-soft);
+    margin:34px 0 4px;
+  }
+  .overall{
+    text-align:center;
+    padding:6px 0 18px;
+  }
+
+  /* ---------- MEME CARDS ---------- */
+  .meme-img{
+    display:block;
+    width:100%;
+    max-width:320px;
+    margin:10px auto 4px;
+    border:1px solid var(--rule);
+    box-shadow:2px 2px 0 rgba(15,37,87,0.08);
+  }
+  .meme-img--big{
+    max-width:380px;
+  }
+  .save-hint{
+    font-family:'Special Elite', monospace;
+    font-size:0.62rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ink-soft);
+    text-align:center;
+    margin:0 0 4px;
+  }
+
+  /* ---------- CUSTOM RATING ---------- */
+  .custom-rate{
+    max-width:560px;
+    margin:0 auto;
+    text-align:center;
+    padding-bottom:10px;
+  }
+  .custom-intro{
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:0.92rem;
+    margin:0 0 12px;
+  }
+  .custom-input{
+    width:100%;
+    min-height:80px;
+    padding:12px;
+    font-family:'Lora', serif;
+    font-size:0.95rem;
+    color:var(--ink);
+    background:var(--paper-card);
+    border:1px solid var(--rule);
+    resize:vertical;
+    box-sizing:border-box;
+    margin-bottom:12px;
+  }
+  .custom-input:focus{
+    outline:2px solid var(--accent);
+    outline-offset:1px;
+  }
+  #customResult{
+    margin-top:18px;
+    display:flex;
+    justify-content:center;
+  }
+  #customResult .story-card{
+    max-width:340px;
+    width:100%;
+  }
+
+  /* ---------- STORIES GRID ---------- */
+  .stories-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+    gap:18px;
+    margin-top:14px;
+  }
+  .story-card{
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ---------- SPONSOR ---------- */
+  .sponsor{
+    max-width:640px;
+    margin:40px auto 0;
+    text-align:center;
+    background:var(--paper-card);
+    border:1px solid var(--rule);
+    padding:18px 20px 16px;
+    box-shadow:2px 2px 0 rgba(15,37,87,0.06);
+  }
+  .sponsor .sponsor-eyebrow{
+    font-family:'Special Elite', monospace;
+    font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .sponsor .sponsor-text{
+    font-size:0.95rem;
+    color:var(--ink);
+    margin:0 0 8px;
+  }
+  .sponsor a{
+    color:var(--accent);
+    font-weight:600;
+    text-decoration:none;
+    border-bottom:1px solid var(--accent);
+  }
+  .sponsor a:hover{ border-bottom-width:2px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    margin-top:46px;
+    text-align:center;
+    font-family:'Special Elite', monospace;
+    font-size:0.68rem;
+    color:var(--ink-soft);
+    letter-spacing:0.05em;
+    line-height:1.8;
+  }
+  footer .footer-stars{ color:var(--accent); letter-spacing:0.5em; font-size:1rem; margin-bottom:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="stars">✡ &nbsp; ✈ &nbsp; ✡</div>
+    <h1>Another Reason To Make Aliyah</h1>
+    <div class="subhead">A Daily Survey of World Events &mdash; Each One Another Nudge Toward Ben Gurion Airport</div>
+  </div>
+
+  <hr class="rule">
+  <div class="dateline">
+    <span id="todayDate">&mdash;</span>
+    <span id="volNo">Vol. I, No. &mdash;</span>
+    <span>Price: 1 Shekel</span>
+  </div>
+  <hr class="rule thin">
+
+  <div class="action-bar">
+    <button class="press-btn" id="fetchBtn">✈ Check Today's Reasons</button>
+    <div class="meta-line" id="metaLine">No edition composed yet. The meter awaits.</div>
+    <div class="error-line" id="errorLine" style="display:none;"></div>
+  </div>
+
+  <div id="overallSection" style="display:none;">
+    <div class="section-label">Today's Aliyah Meter Reading</div>
+    <div class="overall">
+      <div id="overallMeme"></div>
+    </div>
+  </div>
+
+  <div id="storiesSection" style="display:none;">
+    <div class="section-label">Today's Reasons</div>
+    <div class="stories-grid" id="storiesGrid"></div>
+  </div>
+
+  <hr class="rule thin" style="margin-top:34px;">
+
+  <div class="custom-rate">
+    <div class="section-label" style="margin-top:24px;">Submit Your Own Reason</div>
+    <p class="custom-intro">Bad commute? Cousin's wedding got political? Paste a headline, a link, or describe what happened — we'll tell you how close you are to the airport.</p>
+    <textarea id="customInput" class="custom-input" maxlength="500" placeholder="e.g. &quot;My rent went up 20% and the elevator's been broken since Purim&quot; — or paste a news URL"></textarea>
+    <button class="press-btn" id="customBtn">✈ Read The Meter</button>
+    <div class="meta-line" id="customMeta"></div>
+    <div class="error-line" id="customErrorLine" style="display:none;"></div>
+    <div id="customResult"></div>
+  </div>
+
+  <div class="sponsor">
+    <div class="sponsor-eyebrow">A Word From Our Sponsor (Who Is Also Us)</div>
+    <p class="sponsor-text">If the meter says "Get On A Plane," the finances shouldn't be the thing that stops you. <a href="https://AliyaFinancial.com" target="_blank" rel="noopener">AliyaFinancial.com</a> — cross-border financial planning for your move between the U.S. and Israel.</p>
+  </div>
+
+  <footer>
+    <div class="footer-stars">✡ ✈ ✡</div>
+    Meter readings generated by an algorithm that has never once packed a suitcase.<br>
+    For entertainment purposes only. Consult your family, your rabbi, and your accountant &mdash; probably in that order.<br>
+    &copy; <span id="yearNow"></span> Another Reason To Make Aliyah &mdash; All rights reversed.
+  </footer>
+
+</div>
+
+<script>
+function todayKey(){
+  return new Date().toISOString().slice(0,10);
+}
+
+function setupDateline(){
+  const now = new Date();
+  document.getElementById('todayDate').textContent = now.toLocaleDateString(undefined, { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  document.getElementById('yearNow').textContent = now.getFullYear();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now - start) / 86400000);
+  document.getElementById('volNo').textContent = `Vol. I, No. ${dayOfYear}`;
+}
+
+// ---------- Shareable card image (the only rendering of each story) ----------
+function drawGaugeOnCanvas(ctx, cx, cy, r, rating){
+  // Arc: gray ("not yet") to Israeli flag blue ("get on a plane")
+  const grad = ctx.createLinearGradient(cx - r, cy, cx + r, cy);
+  grad.addColorStop(0, '#8a94a6');
+  grad.addColorStop(0.5, '#4a76c9');
+  grad.addColorStop(1, '#0038b8');
+  ctx.lineWidth = r * 0.16;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = grad;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, Math.PI, 2 * Math.PI);
+  ctx.stroke();
+
+  // Needle
+  const clamped = Math.max(0, Math.min(100, Number(rating) || 0));
+  const angle = Math.PI + (clamped / 100) * Math.PI;
+  const nx = cx + (r * 0.78) * Math.cos(angle);
+  const ny = cy + (r * 0.78) * Math.sin(angle);
+  ctx.strokeStyle = '#0f2557';
+  ctx.lineWidth = r * 0.045;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.lineTo(nx, ny);
+  ctx.stroke();
+  ctx.fillStyle = '#0f2557';
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 0.07, 0, 2 * Math.PI);
+  ctx.fill();
+
+  // Labels
+  ctx.fillStyle = '#4a5d85';
+  ctx.font = `${Math.round(r * 0.085)}px 'Special Elite', monospace`;
+  ctx.textAlign = 'left';
+  ctx.fillText('NOT YET', cx - r, cy + r * 0.18);
+  ctx.textAlign = 'right';
+  ctx.fillText('GET ON A PLANE', cx + r, cy + r * 0.18);
+}
+
+function wrapLines(ctx, text, maxWidth){
+  const words = String(text || '').split(' ');
+  let line = '';
+  const lines = [];
+  for(let n = 0; n < words.length; n++){
+    const testLine = line + words[n] + ' ';
+    if(ctx.measureText(testLine).width > maxWidth && n > 0){
+      lines.push(line.trim());
+      line = words[n] + ' ';
+    } else {
+      line = testLine;
+    }
+  }
+  lines.push(line.trim());
+  return lines;
+}
+
+// Builds a single, self-contained card image (eyebrow, headline, gauge,
+// verdict, commentary, kicker). Layout height is computed dynamically from
+// the actual wrapped text so nothing ever overlaps.
+async function buildShareCard(item){
+  await document.fonts.ready;
+
+  const W = 1080;
+  const PAD = 64;
+  const CW = W - PAD * 2;
+  const MAX_H = 2400;
+
+  const HEADLINE_FONT = `bold 50px 'Frank Ruhl Libre', serif`;
+  const HEADLINE_LH = 60;
+  const VERDICT_FONT = `bold 60px 'Frank Ruhl Libre', serif`;
+  const COMMENTARY_FONT = `italic 36px 'Lora', serif`;
+  const COMMENTARY_LH = 48;
+  const KICKER_FONT = `600 34px 'Lora', serif`;
+  const KICKER_LH = 46;
+  const SOURCE_FONT = `28px 'Special Elite', monospace`;
+  const BRAND_FONT = `bold 36px 'Frank Ruhl Libre', serif`;
+  const SCORE_FONT = `28px 'Special Elite', monospace`;
+  const GAUGE_R = 230;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = MAX_H;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#f4f7fb';
+  ctx.fillRect(0, 0, W, MAX_H);
+  ctx.textAlign = 'center';
+
+  let y = PAD;
+
+  // Brand line
+  ctx.fillStyle = '#0038b8';
+  ctx.font = BRAND_FONT;
+  y += 44;
+  ctx.fillText('✡ Another Reason To Make Aliyah ✈', W / 2, y);
+  y += 50;
+
+  if(!item.isOverall){
+    // Source eyebrow
+    ctx.fillStyle = '#4a5d85';
+    ctx.font = SOURCE_FONT;
+    y += 30;
+    ctx.fillText((item.source || 'Wire Report').toUpperCase(), W / 2, y);
+    y += 50;
+
+    // Headline
+    ctx.fillStyle = '#0f2557';
+    ctx.font = HEADLINE_FONT;
+    const headlineLines = wrapLines(ctx, item.headline, CW);
+    headlineLines.forEach((l, i) => ctx.fillText(l, W / 2, y + i * HEADLINE_LH));
+    y += headlineLines.length * HEADLINE_LH;
+    y += 30;
+  } else {
+    y += 10;
+  }
+
+  // Gauge
+  const gaugeCenterY = y + GAUGE_R;
+  drawGaugeOnCanvas(ctx, W / 2, gaugeCenterY, GAUGE_R, item.rating);
+  ctx.textAlign = 'center';
+  y = gaugeCenterY + 80;
+
+  // Verdict
+  ctx.fillStyle = '#0f2557';
+  ctx.font = VERDICT_FONT;
+  y += 50;
+  const verdictLines = wrapLines(ctx, item.verdict, CW);
+  verdictLines.forEach((l, i) => ctx.fillText(l, W / 2, y + i * 64));
+  y += (verdictLines.length - 1) * 64;
+
+  // Score
+  ctx.fillStyle = '#4a5d85';
+  ctx.font = SCORE_FONT;
+  y += 44;
+  ctx.fillText(`ALIYAH METER: ${item.rating} / 100`, W / 2, y);
+  y += 54;
+
+  // Commentary
+  ctx.fillStyle = '#4a5d85';
+  ctx.font = COMMENTARY_FONT;
+  const commentaryLines = wrapLines(ctx, item.commentary, CW);
+  commentaryLines.forEach((l, i) => ctx.fillText(l, W / 2, y + i * COMMENTARY_LH));
+  y += commentaryLines.length * COMMENTARY_LH;
+
+  // Kicker
+  if(item.kicker){
+    y += 18;
+    ctx.fillStyle = '#0f2557';
+    ctx.font = KICKER_FONT;
+    const kickerLines = wrapLines(ctx, item.kicker, CW);
+    kickerLines.forEach((l, i) => ctx.fillText(l, W / 2, y + i * KICKER_LH));
+    y += kickerLines.length * KICKER_LH;
+  }
+
+  // Footer
+  y += 56;
+  ctx.fillStyle = '#4a5d85';
+  ctx.font = `22px 'Special Elite', monospace`;
+  ctx.fillText('AliyaFinancial.com', W / 2, y);
+  y += PAD - 10;
+
+  const finalH = Math.min(Math.round(y), MAX_H);
+
+  const final = document.createElement('canvas');
+  final.width = W;
+  final.height = finalH;
+  const fctx = final.getContext('2d');
+  fctx.drawImage(canvas, 0, 0, W, finalH, 0, 0, W, finalH);
+  fctx.strokeStyle = '#8fa3c8';
+  fctx.lineWidth = 4;
+  fctx.strokeRect(16, 16, W - 32, finalH - 32);
+
+  return final.toDataURL('image/png');
+}
+
+async function createStoryCardElement(story){
+  const card = document.createElement('div');
+  card.className = 'story-card';
+
+  const dataUrl = await buildShareCard({
+    headline: story.headline,
+    source: story.source,
+    verdict: story.verdict,
+    rating: story.rating,
+    commentary: story.commentary,
+    kicker: story.kicker || '',
+    isOverall: false
+  });
+  const img = document.createElement('img');
+  img.className = 'meme-img';
+  img.alt = `${story.headline} — ${story.verdict}`;
+  img.src = dataUrl;
+  card.appendChild(img);
+  const hint = document.createElement('div');
+  hint.className = 'save-hint';
+  hint.textContent = 'Right-click (or long-press) to save & share';
+  card.appendChild(hint);
+
+  return card;
+}
+
+async function renderEdition(data){
+  document.getElementById('overallSection').style.display = '';
+  document.getElementById('storiesSection').style.display = '';
+
+  const overallMemeWrap = document.getElementById('overallMeme');
+  overallMemeWrap.innerHTML = '';
+  const overallDataUrl = await buildShareCard({
+    verdict: data.overall.verdict,
+    rating: data.overall.rating,
+    commentary: data.overall.commentary,
+    kicker: data.overall.kicker || '',
+    isOverall: true
+  });
+  const overallImg = document.createElement('img');
+  overallImg.className = 'meme-img meme-img--big';
+  overallImg.alt = `Today's Aliyah Meter: ${data.overall.verdict}`;
+  overallImg.src = overallDataUrl;
+  overallMemeWrap.appendChild(overallImg);
+  const overallHint = document.createElement('div');
+  overallHint.className = 'save-hint';
+  overallHint.textContent = 'Right-click (or long-press) to save & share';
+  overallMemeWrap.appendChild(overallHint);
+
+  const grid = document.getElementById('storiesGrid');
+  grid.innerHTML = '';
+  for(const story of data.stories){
+    const card = await createStoryCardElement(story);
+    grid.appendChild(card);
+  }
+}
+
+async function getEditionViaBackend(){
+  const response = await fetch('/api/edition', { method: 'GET' });
+  const parsed = await response.json();
+  if(!response.ok || parsed.error){
+    throw new Error(parsed.error || `Server returned ${response.status}`);
+  }
+  return parsed;
+}
+
+async function fetchEdition(){
+  const btn = document.getElementById('fetchBtn');
+  const meta = document.getElementById('metaLine');
+  const errLine = document.getElementById('errorLine');
+  errLine.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = "✈ Reading the meter…";
+  meta.textContent = 'Scanning the world for reasons. This can take up to a minute.';
+
+  try{
+    const parsed = await getEditionViaBackend();
+    await renderEdition(parsed);
+    meta.textContent = `Edition composed at ${new Date().toLocaleTimeString()}. Dateline: ${parsed.date || ''}`;
+
+    try{
+      localStorage.setItem('aliyah-edition:' + todayKey(), JSON.stringify(parsed));
+    }catch(e){ /* storage best-effort */ }
+
+  }catch(err){
+    errLine.style.display = '';
+    errLine.textContent = 'The meter jammed: ' + err.message + '. Try again in a moment.';
+    meta.textContent = 'No edition composed yet.';
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "✈ Check Today's Reasons";
+  }
+}
+
+document.getElementById('fetchBtn').addEventListener('click', fetchEdition);
+
+async function getCustomRatingViaBackend(input){
+  const response = await fetch('/api/rate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ input })
+  });
+  const parsed = await response.json();
+  if(!response.ok || parsed.error){
+    throw new Error(parsed.error || `Server returned ${response.status}`);
+  }
+  return parsed;
+}
+
+async function submitCustomRating(){
+  const input = document.getElementById('customInput').value.trim();
+  const btn = document.getElementById('customBtn');
+  const meta = document.getElementById('customMeta');
+  const errLine = document.getElementById('customErrorLine');
+  const result = document.getElementById('customResult');
+
+  errLine.style.display = 'none';
+
+  if(!input){
+    errLine.style.display = '';
+    errLine.textContent = "You'll need to paste something first — a headline, a link, or a sentence about what happened.";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '✈ Consulting the meter…';
+  meta.textContent = 'Weighing your tsuris against flight prices. This can take a moment.';
+  result.innerHTML = '';
+
+  try{
+    const story = await getCustomRatingViaBackend(input);
+    const card = await createStoryCardElement(story);
+    result.appendChild(card);
+    meta.textContent = 'Reading complete. Right-click the card to save it.';
+  }catch(err){
+    errLine.style.display = '';
+    errLine.textContent = 'Could not get a reading: ' + err.message + '. Try again in a moment.';
+    meta.textContent = '';
+  }finally{
+    btn.disabled = false;
+    btn.textContent = '✈ Read The Meter';
+  }
+}
+
+document.getElementById('customBtn').addEventListener('click', submitCustomRating);
+
+(async function init(){
+  setupDateline();
+  try{
+    const cached = localStorage.getItem('aliyah-edition:' + todayKey());
+    if(cached){
+      const parsed = JSON.parse(cached);
+      await renderEdition(parsed);
+      document.getElementById('metaLine').textContent = `Showing today's earlier edition. Dateline: ${parsed.date || ''}. Click above to re-run.`;
+    }
+  }catch(e){ /* no cached edition, that's fine */ }
+})();
+</script>
+</body>
+</html>
