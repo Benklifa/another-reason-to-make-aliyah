@@ -544,7 +544,7 @@ async function renderEdition(data){
 }
 
 async function getEditionViaBackend(){
-  const response = await fetch('/api/edition', { method: 'GET' });
+  const response = await fetch('/api/edition?t=' + Date.now(), { method: 'GET', cache: 'no-store' });
   const parsed = await response.json();
   if(!response.ok || parsed.error){
     throw new Error(parsed.error || `Server returned ${response.status}`);
