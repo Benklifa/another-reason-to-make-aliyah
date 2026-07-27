@@ -30,7 +30,12 @@ Your job, in this exact order:
 1. Do ONE web search to find 5 significant, varied news stories from TODAY. Aim for a MIX: roughly 3 "push" stories (bad news abroad) and 2 "pull" stories (good news from Israel in hi-tech or culture). If a great Israeli hi-tech or culture story is available, always include at least one. A neutral or good non-Israel story is fine too and can rate LOW on the meter ("fine, stay another year").
 2. Immediately stop searching and write your output. Do not search again.
 
-If several newsworthy stories are available, favor variety and freshness — pick a different mix of topics and angles rather than always the single biggest headline, so repeat editions on the same day feel different. Vary the jokes and verdict labels too.
+CRITICAL — VARIETY ACROSS RUNS: This edition is generated many times per day, and each run MUST feel genuinely different, not the same five stories reworded. To achieve this:
+- The user message will specify which news CATEGORIES to emphasize this run and may suggest specific search terms — follow that emphasis when choosing your single search query and when selecting stories.
+- Deliberately AVOID the "obvious top 5" that every news aggregator leads with. When multiple qualifying stories exist, prefer different specific events, angles, regions, and beats than the single biggest global headlines.
+- Actively ROTATE between big global headlines and smaller, local, regional, or offbeat stories. At least 2 of your 5 should be lesser-covered or human-interest / niche stories rather than the day's dominant headlines.
+- Pick DIFFERENT specific events when multiple qualify — do not simply reword the same shooting, wildfire, or geopolitical story that a "typical top 5" would surface. Vary the jokes, verdict labels, and meter scores too.
+- If you find yourself about to pick the single most-covered story of the day, ask whether a fresher, less-obvious qualifying story would serve the edition better — usually it will.
 
 For "pull" stories (good Israeli hi-tech/culture news), lean into pride and gentle FOMO: the verdict and commentary should make staying abroad sound like missing the party. For "push" stories, lean into the classic kvetch.
 
@@ -64,6 +69,53 @@ export default async function handler(req, res) {
     });
   }
 
+  // --- Per-run variety: rotate which categories get emphasized and suggest
+  // varied search terms, so the model's single web search returns different
+  // results on repeated clicks within the same day. ---
+  const CATEGORIES = [
+    { name: 'US news', terms: ['US news today', 'American politics today', 'US economy inflation today'] },
+    { name: 'world news', terms: ['world news today', 'Europe news today', 'international headlines today'] },
+    { name: 'Israel & Jewish news', terms: ['Israel news today', 'Jewish community news today', 'Israel current events'] },
+    { name: 'Israeli hi-tech', terms: ['Israel startup news today', 'Israeli tech funding today', 'Israel innovation today'] },
+    { name: 'Israeli culture', terms: ['Israel culture news today', 'Israeli film music today', 'Tel Aviv food arts today'] },
+    { name: 'economy & cost of living', terms: ['cost of living news today', 'inflation housing prices today', 'economy news today'] },
+    { name: 'weather & disasters', terms: ['extreme weather news today', 'natural disaster today', 'heat wave storm today'] },
+    { name: 'offbeat & local', terms: ['offbeat news today', 'weird local news today', 'human interest news today'] },
+    { name: 'tech & science', terms: ['technology news today', 'science breakthrough today', 'AI news today'] },
+    { name: 'culture & sport', terms: ['culture news today', 'sports news today', 'entertainment news today'] }
+  ];
+
+  function pick(arr, n) {
+    const copy = arr.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy.slice(0, n);
+  }
+
+  // Always keep at least one Israeli-positive category in the mix (for the
+  // "pull"), then add a random spread of others for variety.
+  const israeliPull = pick(
+    CATEGORIES.filter((c) => c.name === 'Israeli hi-tech' || c.name === 'Israeli culture'),
+    1
+  );
+  const others = pick(
+    CATEGORIES.filter((c) => c.name !== 'Israeli hi-tech' && c.name !== 'Israeli culture'),
+    3
+  );
+  const emphasis = pick([...israeliPull, ...others], 4);
+  const emphasisNames = emphasis.map((c) => c.name).join(', ');
+  const suggestedTerms = emphasis.map((c) => c.terms[Math.floor(Math.random() * c.terms.length)]).join('  |  ');
+  const seed = Math.random().toString(36).slice(2, 8);
+
+  const userMessage =
+    `Produce today's edition JSON now. ONE search only, then output the JSON.\n\n` +
+    `For THIS run, emphasize these news categories (weight them roughly in this order): ${emphasisNames}.\n` +
+    `Suggested search angles you may draw from (pick or adapt one for your single search): ${suggestedTerms}.\n` +
+    `Variety token (ignore its meaning, just let it push you toward a different-than-usual selection): ${seed}.\n` +
+    `Remember: avoid the obvious top-5 headlines, rotate in at least two lesser-covered/offbeat/local stories, and include at least one positive Israeli hi-tech or culture story.`;
+
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -79,7 +131,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: 'user',
-            content: "Search for today's major news headlines and produce today's edition JSON now. Remember: ONE search only, then output the JSON."
+            content: userMessage
           }
         ],
         tools: [{ type: 'web_search_20250305', name: 'web_search' }]
