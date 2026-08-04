@@ -285,6 +285,7 @@
   <div class="sponsor">
     <div class="sponsor-eyebrow">A Word From Our Sponsor (Who Is Also Us)</div>
     <p class="sponsor-text">If the meter says "Get On A Plane," the finances shouldn't be the thing that stops you. <a href="https://AliyaFinancial.com" target="_blank" rel="noopener">AliyaFinancial.com</a> — cross-border financial planning for your move between the U.S. and Israel.</p>
+    <p class="sponsor-text" style="font-size:0.75rem; color:var(--ink-soft); margin-top:8px;">Satire, not advice. Nu, relax. Advisory services offered through Aliya Financial LLC.</p>
   </div>
 
   <footer>
@@ -465,11 +466,17 @@ async function buildShareCard(item){
     y += kickerLines.length * KICKER_LH;
   }
 
-  // Footer
+  // Footer — URL plus FIXED, pre-approved compliance/disclaimer line.
+  // This text is intentionally hardcoded (never AI-generated) so it stays a
+  // reviewed, retainable marketing string.
   y += 56;
-  ctx.fillStyle = '#4a5d85';
-  ctx.font = `22px 'Special Elite', monospace`;
+  ctx.fillStyle = '#0038b8';
+  ctx.font = `bold 24px 'Special Elite', monospace`;
   ctx.fillText('AliyaFinancial.com', W / 2, y);
+  y += 30;
+  ctx.fillStyle = '#4a5d85';
+  ctx.font = `18px 'Special Elite', monospace`;
+  ctx.fillText('Satire, not advice. Nu, relax.', W / 2, y);
   y += PAD - 10;
 
   const finalH = Math.min(Math.round(y), MAX_H);
